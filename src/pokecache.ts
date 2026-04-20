@@ -26,6 +26,11 @@ export class Cache{
         this.#reapIntervalId = setInterval(this.#reap, this.#interval);
     }
 
+    stopReapLoop(){
+        clearInterval(this.#reapIntervalId);
+        this.#reapIntervalId = undefined;
+    }
+
     add<T>(key: string, val: T){
         try{
             const entry: CacheEntry<T> = {
