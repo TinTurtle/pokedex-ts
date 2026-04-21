@@ -23,12 +23,14 @@ export type CLICommand = {
 };
 
 export function initState(): State {
+    //initializing a readline Interface
     const rl = createInterface({
         input: process.stdin,
         output: process.stdout,
         prompt: "Pokedex > ",
     });
 
+    //initializing a registry for all the commands 
     const commands = {
         exit: {
             name: "exit",
@@ -52,6 +54,7 @@ export function initState(): State {
         },
     };
 
+    // initializing an instance of the object to establish connection with the api
     const pokeapi = new PokeAPI();
 
     return {

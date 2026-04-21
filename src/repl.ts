@@ -6,7 +6,8 @@ export function startREPL(state: State){
     state.rl.prompt();
 
     state.rl.on('line', async (input) => {
-        const words = cleanInput(input);
+        const words = cleanInput(input);// cleaning and filtering the input
+        //skipping an empty command
         if(words.length === 0){
             state.rl.prompt();
             return;
@@ -15,14 +16,16 @@ export function startREPL(state: State){
         const commandName = words[0];
 
         const commands = state.commands;
-        const cmd = commands[commandName];
+        const cmd = commands[commandName]; // looking up the registry for a match
 
+        // handle invalid commands
         if (!cmd) {
             console.log(`Unknown command: "${commandName}". Type "help" for a list of commands.`,);
             state.rl.prompt();
             return;
         }
 
+        // call the calback function related to the command in the registry
         try {
             await cmd.callback(state);
         } catch (e) {
